@@ -11,6 +11,9 @@ const invalidCount = document.getElementById('invalid-count');
 const usePromiseButton = document.getElementById('use-promise');
 const useAsyncButton = document.getElementById('use-async-await');
 const checkRespButton = document.getElementById('check-response');
+const playerResponse = document.getElementById('player-response');
+const score = document.getElementById('score');
+let scoreValue = 0;
 
 function getInnerHTML(clueObj) {
     question.innerHTML = `${clueObj.question}`
@@ -25,7 +28,14 @@ function getInnerHTML(clueObj) {
     }
 }
 
+function newQuestion() {
+    checkRespButton.classList.remove('is-hidden');
+    playerResponse.value = '';
+    answer.classList.add('is-hidden');
+}
+
 callbackButton.addEventListener('click', event => {
+    newQuestion()
     getClueFromCallBack((error, clueObj) => {
         if (error !== null) console.error(error);
         getInnerHTML(clueObj);
@@ -34,12 +44,14 @@ callbackButton.addEventListener('click', event => {
 })
 
 usePromiseButton.addEventListener('click', event => {
+    newQuestion()
     getClueFromPromise()
         .then(getInnerHTML)
         .catch(reason => console.log(reason))
 })
 
 useAsyncButton.addEventListener('click', async (event) => {
+    newQuestion()
     try {
         const clue = await getClueFromAsyncFunction();
         console.log(clue);
@@ -50,5 +62,16 @@ useAsyncButton.addEventListener('click', async (event) => {
 })
 
 checkRespButton.addEventListener('click', event => {
+    let playerAnswer = playerResponse.value.trim()
+    let answerCheck = answer.innerHTML.trim()
     
+    if (playerAnswer === answerCheck) {
+        scoreValue += Number(value.innerHTML);
+    } else {
+        scoreValue -= Number(value.innerHTML);
+    }
+    score.innerHTML = scoreValue;
+    answer.classList.remove('is-hidden');
+    checkRespButton.classList.add('is-hidden');
 })
+
