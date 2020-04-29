@@ -9,41 +9,6 @@ const categoryTitle = document.getElementById('category-title');
 const invalidCount = document.getElementById('invalid-count');
 const usePromiseButton = document.getElementById('use-promise');
 
-// callbackButton.addEventListener('click', event => {
-//     getClueFromCallBack( (error, clueObj) => {
-//         if (error !== null) console.error(error);
-//         console.log(clueObj); // delete this line later
-//         question.innerHTML = `${clueObj.question}`
-//         answer.innerHTML = `${clueObj.answer}`
-//         value.innerHTML = `${clueObj.value}`
-//         categoryTitle.innerHTML = `${clueObj.category.title}`
-
-//         if (`${clueObj.invalid_count}` > 0) {
-//             invalidCount.innerHTML = 'invalid'
-//         } else {
-//             invalidCount.innerHTML = 'valid'
-//         }
-
-//     })
-// })
-
-// usePromiseButton.addEventListener('click', event => {
-//     getClueFromPromise()
-//         .then(clueObj => {
-//             console.log(clueObj); // delete this line later
-//             question.innerHTML = `${clueObj.question}`
-//             answer.innerHTML = `${clueObj.answer}`
-//             value.innerHTML = `${clueObj.value}`
-//             categoryTitle.innerHTML = `${clueObj.category.title}`
-
-//             if (`${clueObj.invalid_count}` > 0) {
-//                 invalidCount.innerHTML = 'invalid'
-//             } else {
-//                 invalidCount.innerHTML = 'valid'
-//             }
-//         })
-//         .catch(reason => console.log(reason))
-// })
 callbackButton.addEventListener('click', event => {
     getClueFromCallBack((error, clueObj) => {
         if (error !== null) console.error(error);
