@@ -1,5 +1,6 @@
 import { getClue as getClueFromCallBack } from './callback-version.js'
 import { getClue as getClueFromPromise } from './promise-version.js'
+import { getClue as getClueFromAsyncFunction } from './async-await-version.js'
 
 const callbackButton = document.getElementById('use-callback');
 const question = document.getElementById('question');
@@ -8,6 +9,21 @@ const value = document.getElementById('value');
 const categoryTitle = document.getElementById('category-title');
 const invalidCount = document.getElementById('invalid-count');
 const usePromiseButton = document.getElementById('use-promise');
+const useAsyncButton = document.getElementById('use-async-await');
+const checkRespButton = document.getElementById('check-response');
+
+function getInnerHTML(clueObj) {
+    question.innerHTML = `${clueObj.question}`
+    answer.innerHTML = `${clueObj.answer}`
+    value.innerHTML = `${clueObj.value}`
+    categoryTitle.innerHTML = `${clueObj.category.title}`
+
+    if (`${clueObj.invalid_count}` > 0) {
+        invalidCount.innerHTML = 'invalid'
+    } else {
+        invalidCount.innerHTML = 'valid'
+    }
+}
 
 callbackButton.addEventListener('click', event => {
     getClueFromCallBack((error, clueObj) => {
@@ -23,15 +39,16 @@ usePromiseButton.addEventListener('click', event => {
         .catch(reason => console.log(reason))
 })
 
-function getInnerHTML(clueObj) {
-    question.innerHTML = `${clueObj.question}`
-    answer.innerHTML = `${clueObj.answer}`
-    value.innerHTML = `${clueObj.value}`
-    categoryTitle.innerHTML = `${clueObj.category.title}`
-
-    if (`${clueObj.invalid_count}` > 0) {
-        invalidCount.innerHTML = 'invalid'
-    } else {
-        invalidCount.innerHTML = 'valid'
+useAsyncButton.addEventListener('click', async (event) => {
+    try {
+        const clue = await getClueFromAsyncFunction();
+        console.log(clue);
+        getInnerHTML(clue);
+    } catch (e) {
+        console.log(e.message);
     }
-}
+})
+
+checkRespButton.addEventListener('click', event => {
+    
+})
